@@ -1,9 +1,9 @@
 from collections import *
 
-IS_RELEASE = False
+IS_RELEASE = True
 if not IS_RELEASE:
     import sys
-    sys.stdin = open("input1.txt", "r")
+    sys.stdin = open("input5.txt", "r")
 
 # Utility Function
 ## Debug print
@@ -14,6 +14,7 @@ def dprt(logstr):
 # Constant
 TILT_UP, TILT_RIGHT, TILT_DOWN, TILT_LEFT = [elem for elem in range(4)]
 DIR_STR = ['TILT_UP', 'TILT_RIGHT', 'TILT_DOWN', 'TILT_LEFT' ]
+
 # Class
 class Board:
     def __init__(self, arr):
@@ -67,9 +68,15 @@ class Board:
                 self.arr[ypos][xpos] = 0
                 self.addable[nexty][nextx] = False
                 return
+        
+        yprev = nexty - ydir
+        xprev = nextx - xdir
 
+        if yprev == ypos and xprev == xpos:
+            return
+        self.arr[yprev][xprev] = self.arr[ypos][xpos]
         self.arr[ypos][xpos] = 0
-        self.arr[nexty - ydir][nextx - xdir] = self.arr[ypos][xpos]
+
 
 
     def tilt_xydir(self, xdir, ydir):
@@ -94,8 +101,7 @@ class Board:
         for xpos in range(xstart, xend, xstep):
             for ypos in range(ystart, yend, ystep):
                 self.tilt_one(xpos, ypos, xdir, ydir)
-                dprt(f'{xpos} {ypos}')
-        pass
+
 
     def tilt(self, dir):
         xdir = 0
@@ -124,14 +130,17 @@ def get_input():
 dirs = [TILT_UP, TILT_RIGHT, TILT_DOWN, TILT_LEFT]
 
 def tilt_dfs(board: Board, depth):
-    if (depth == 2):
+    if (depth == 5):
         return board.get_maxval()
 
     max = 0
     for dir in dirs:
         newboard = Board(board.arr)
+        dprt('priv')
+        newboard.dprt()
         newboard.tilt(dir)
-        dprt(f'depth:{depth} tilt:{DIR_STR[dir]}')
+        # dprt(f'depth:{depth} tilt:{DIR_STR[dir]}')
+        dprt(f'after tilt to {DIR_STR[dir]}')
         newboard.dprt()
         val = tilt_dfs(newboard, depth + 1)
         if val > max:
