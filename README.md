@@ -92,3 +92,8 @@ def mod_power(x, y, p):
         x = (x * x) % p
     return res
 ```
+
++ Initialize 2d array
+```py
+t = [ [0]*x for i in range(y)]
+```
