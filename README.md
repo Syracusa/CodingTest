@@ -1,3 +1,10 @@
+# Main 함수 지정
+```py
+if __name__ == "__main__":
+    somethingtodo()
+```
+
+
 # 입출력
 
 ## Basic 
@@ -67,3 +74,19 @@ range(start, stop, step)
 + 파이썬의 경우 sys 라이브러리에 정의되어 있는 sys.stdin.readline() 메서드를 이용
 + 단 입력 후 엔터(Enter)가 줄 바꿈 기호로 입력되므로 rstrip() 메서드를 함꼐 사용함
 
+
+# Snippet
++ Fast power fucntion
+```py
+def mod_power(x, y, p):
+    res = 1
+    x = x % p
+    while y > 0:
+        if y % 2 == 1:
+            res = (res * x) / p
+            y -= 1
+
+        y /= 2
+        x = (x * x) % p
+    return res
+```
