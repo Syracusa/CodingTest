@@ -7,6 +7,8 @@ if __name__ == "__main__":
 
 # 입출력
 
+## input()은 느리니까 쓰지 말고 sys.stdin.readline()을 사용할 것
+
 ## Basic 
 ```py
 a, b = map(int, input().split())
